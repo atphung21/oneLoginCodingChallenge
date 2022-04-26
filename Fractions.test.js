@@ -94,3 +94,29 @@ describe("Add Fractions.", () => {
   });
 });
 
+describe("subtract Fractions.", () => {
+  test("Subtract two postive fractions w/first fraction smaller.", () => {
+    expect(fractions.subtractFractions('1/2', '2/3')).toBe('-1/6');
+  });
+
+  test("Subtract two positive fractions.", () => {
+    expect(fractions.subtractFractions('2/3', '1/2')).toBe('1/6');
+  });
+
+  test("Subtract Improper fraction with Positive Fraction.", () => {
+    expect(fractions.subtractFractions('5/2','3/4')).toBe('14/8');
+  });
+
+  test("Subtract Zero Fraction w/ Positive Fraction.", () => {
+    expect(fractions.subtractFractions('0/1','3/4')).toBe('-3/4');
+  });
+
+  test("Subtract Negative Fraction with a Postive Fraction.", () => {
+    expect(fractions.subtractFractions('-1/2','3/4')).toBe('-10/8');
+  });
+
+  test("Subtract Postive Fraction with a Negative Fraction.", () => {
+    expect(fractions.subtractFractions('1/2','-3/4')).toBe('10/8');
+  });
+});
+
