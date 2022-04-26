@@ -18,6 +18,9 @@
 * To run the tests run `npm t` on the project root.
 * For code coverage run `npm run test:cov` , coverage files will be in the `coverage` folder.
 
+<img width="563" alt="testCoverage" src="https://user-images.githubusercontent.com/63481565/165283895-98ffd3c4-3197-4ec9-96af-f5216fb1f911.png">
+
+
 ## Libraries/Tools used
 * Uses Jest for testing.
 * run-func for command line.
