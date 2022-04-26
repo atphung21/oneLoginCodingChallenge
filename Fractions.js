@@ -64,6 +64,22 @@ function divideFractions(fraction1, fraction2) {
   return multiplyFractions(fraction1, reciprocalFraction);
 }
 
+function addFractions(fraction1, fraction2) {
+  let parsedFraction1 = parseFraction(fraction1);
+  let parsedFraction2 = parseFraction(fraction2);
+
+  let fraction1Denominator = `${parsedFraction1[1]}/${parsedFraction1[1]}`;
+  let fraction2Denominator = `${parsedFraction2[1]}/${parsedFraction2[1]}`;
+
+  let convertedFraction1 = multiplyFractions(fraction1Denominator, fraction2);
+  let convertedFraction2 = multiplyFractions(fraction2Denominator, fraction1);
+
+  let addedFractions =
+    parseFraction(convertedFraction1)[0] + parseFraction(convertedFraction2)[0];
+
+  return `${addedFractions}/${parseFraction(convertedFraction2)[1]}`;
+}
+
 function parseFraction(fraction) {
   // Returns an array of two integers (only whole numbers - no decimals)
   let split = fraction.split("/");
@@ -73,8 +89,12 @@ function parseFraction(fraction) {
 
 function getReciprocalFractions(fraction) {
   let parsedFraction = parseFraction(fraction);
+  if (parsedFraction[0] < 0) {
+    let reciprocalNegativeFraction = `-${parsedFraction[1]}/${parsedFraction[0] * -1}`;
+    return reciprocalNegativeFraction;
+  }
   let reciprocalFraction = `${parsedFraction[1]}/${parsedFraction[0]}`;
   return reciprocalFraction;
 }
 
-module.exports = { multiplyFractions, parseFraction, divideFractions, getReciprocalFractions };
+module.exports = { multiplyFractions, parseFraction, divideFractions, getReciprocalFractions, addFractions };
