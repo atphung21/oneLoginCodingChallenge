@@ -153,16 +153,16 @@ describe("Convert mixed fractions to improper fractions.", () => {
 
 describe("Find the greatest common denominator.", () => {
   test("Greatest common denominator of an improper fraction.", () => {
-    expect(fractions.findGcd(8,4)).toBe(4);
+    expect(fractions.findGcd(8, 4)).toBe(4);
   });
   test("Greatest common denominator of a negative improper fraction.", () => {
-    expect(fractions.findGcd(-8,4)).toBe(4);
+    expect(fractions.findGcd(-8, 4)).toBe(4);
   });
   test("Greatest common denominator of a simplified fraction.", () => {
-    expect(fractions.findGcd(15,4)).toBe(1);
+    expect(fractions.findGcd(15, 4)).toBe(1);
   });
   test("Greatest common denominator of a fraction.", () => {
-    expect(fractions.findGcd(4,16)).toBe(4);
+    expect(fractions.findGcd(4, 16)).toBe(4);
   });
 });
 
@@ -185,6 +185,12 @@ describe("Simplify fractions.", () => {
   test("Simplify negative fraction.", () => {
     expect(fractions.simplifyFraction("-4/16")).toBe("-1/4");
   });
+  test("Simplify zero fraction.", () => {
+    expect(fractions.simplifyFraction("0/16")).toBe("0");
+  });
+  test("Simplify fraction 4/4.", () => {
+    expect(fractions.simplifyFraction("4/4")).toBe("1");
+  });
 });
 
 describe("Convert simplified fractions into mixed number.", () => {
@@ -203,6 +209,9 @@ describe("Convert simplified fractions into mixed number.", () => {
   test("Simplified negative fraction returns fraction.", () => {
     expect(fractions.convertToMixedNumber("-1/4")).toBe("-1/4");
   });
+  test("Simplified positive improper fraction returns fraction.", () => {
+    expect(fractions.convertToMixedNumber("8/4")).toBe("2");
+  });
 });
 
 describe("Calculate fractions and simplify", () => {
@@ -210,23 +219,57 @@ describe("Calculate fractions and simplify", () => {
     expect(fractions.fractionCalculator("1/2 * 3_3/4")).toBe("1_7/8");
   });
 
+  test("Multiply whole number with improper fraction.", () => {
+    expect(fractions.fractionCalculator("2 * 3_3/4")).toBe("7_1/2");
+  });
+
+  test("Multiply negative fraction with improper fraction.", () => {
+    expect(fractions.fractionCalculator("-1/2 * 3_3/4")).toBe("-1_7/8");
+  });
+
+  test("Multiply negative mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator("-2_3/8 * 9/8")).toBe("-2_43/64");
+  });
+
   test("Divide mixed number with improper fraction.", () => {
     expect(fractions.fractionCalculator("2_3/8 / 9/8")).toBe("2_1/9");
   });
 
+  test("Divide negative mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator("-2_3/8 / 9/8")).toBe("-2_1/9");
+  });
+
   test("Add mixed number with improper fraction.", () => {
-    expect(fractions.fractionCalculator('2_3/8 + 9/8')).toBe("3_1/2");
+    expect(fractions.fractionCalculator("2_3/8 + 9/8")).toBe("3_1/2");
+  });
+
+  test("Add negative mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator("-2_3/8 + 9/8")).toBe("-1_1/4");
   });
 
   test("Subtract mixed number with improper fraction.", () => {
-    expect(fractions.fractionCalculator('2_3/8 - 9/8')).toBe("1_1/4");
+    expect(fractions.fractionCalculator("2_3/8 - 9/8")).toBe("1_1/4");
+  });
+
+  test("Subtract negative mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator("-2_3/8 - 9/8")).toBe("-3_1/2");
   });
 
   test("Throw error if missing operands.", () => {
-    expect(() => fractions.fractionCalculator(' - 9/8')).toThrow("Arugments must include two operands and an operator.");
+    expect(() => fractions.fractionCalculator(" - 9/8")).toThrow(
+      "Arugments must include two operands and an operator."
+    );
+  });
+
+  test("Throw error if missing operator.", () => {
+    expect(() => fractions.fractionCalculator("3 3 9/8")).toThrow(
+      "Invalid argument."
+    );
   });
 
   test("Throw error if no arguments.", () => {
-    expect(() => fractions.fractionCalculator()).toThrow("Arugments must include two operands and an operator.");
+    expect(() => fractions.fractionCalculator()).toThrow(
+      "Arugments must include two operands and an operator."
+    );
   });
 });

@@ -1,75 +1,24 @@
-// As the next step, we ask that you tackle the below coding problem.
-
-// Coding Challenge:
-
-// Write a command-line program in the language of your choice that will take operations on fractions as an input and produce a fractional result.
-// Legal operators shall be *, /, +, - (multiply, divide, add, subtract)
-// Operands and operators shall be separated by one or more spaces
-// Mixed numbers will be represented by whole_numerator/denominator. e.g. "3_1/4"
-// Improper fractions and whole numbers are also allowed as operands
-
-// Example run:
-
-// ? 1/2 * 3_3/4 = 1_7/8
-
-// ?2_3/8 + 9/8 = 3_1/2
-
-// The problem should take around 2 hours to complete.  For the problem, we recommend that you include test cases and unit tests.
-
-// Cases to think about
-// Improper Fractions (Postive & Negative), Zero, Whole Numbers(positive & Negative), Whole numbers with denominator(Postive & Negative)
-
-//Unit test cases
-// Test cases
-// Null arguments
-// Whole Numbers
-// Improper Fractions
-// Mixed Numbers
-// each function should have its own unit tests
-// Happy Path (Normal cases, improper), edge case (whole numbers, negative numbers, mixed Numbers) each function
-
-// Modularized Functions
-//  +,
-// -,
-// '/',
-// * - done
-// Common Denominator
-// Improper Fractions (easiest to calculate) -
-// Parse strings - dont
-// Convert Improper Fractions into Mixed numbers and simplify
-// Convert Mixed numbers into improper fractions -
-
-// Arguments
-// Improper Fractions
-
-//Edge Cases
-// Simplification (last)
-// Return as improper fraction
-// Return as whole number
-// Error handling
-// return 0 when numerator is 0
-// Throw error for invalid inputs
-// clean up function 9/1 = 9;
-// function to parse operands (split by space)
-// negative numbers when subtracting
-
 function fractionCalculator(equation) {
-  let split = (typeof equation !== "undefined") ? equation
-    .split(" ")
-    .filter((string) => string !== "")
-    .map((element) => {
-      if (
-        element === "*" ||
-        element === "/" ||
-        element === "+" ||
-        element === "-"
-      ) {
-        return element;
-      }
-      return convertToImproperFraction(element);
-    }) : new Error('Must include arguments of two operands and an operator. I.E. 1/2 * 3_3/4');
-
-    console.log(split, 'split')
+  //Takes a string as an argument I.E. "1/2 * 3_3/4"
+  let split =
+    typeof equation !== "undefined"
+      ? equation
+          .split(" ")
+          .filter((string) => string !== "")
+          .map((element) => {
+            if (
+              element === "*" ||
+              element === "/" ||
+              element === "+" ||
+              element === "-"
+            ) {
+              return element;
+            }
+            return convertToImproperFraction(element);
+          })
+      : new Error(
+          "Must include arguments of two operands and an operator. I.E. 1/2 * 3_3/4"
+        );
 
   if (split.length !== 3) {
     throw new Error("Arugments must include two operands and an operator.");
@@ -77,14 +26,21 @@ function fractionCalculator(equation) {
 
   let fraction1 = split[0];
   let fraction2 = split[2];
-  let operator = split[1];
+  let operator =
+    split[1] === "*" ||
+    split[1] === "/" ||
+    split[1] === "+" ||
+    split[1] === "+" ||
+    split[1] === "-"
+      ? split[1]
+      : new Error("Invalid operator.");
   let result;
 
   if (operator === "*") {
     result = multiplyFractions(fraction1, fraction2);
   }
   if (operator === "/") {
-    result =  divideFractions(fraction1, fraction2);
+    result = divideFractions(fraction1, fraction2);
   }
   if (operator === "+") {
     result = addFractions(fraction1, fraction2);
@@ -92,14 +48,15 @@ function fractionCalculator(equation) {
   if (operator === "-") {
     result = subtractFractions(fraction1, fraction2);
   }
-
-  let simplifiedResult = simplifyFraction(result);
-  let mixedNumberResult = convertToMixedNumber(simplifiedResult);
-
-  return mixedNumberResult;
+  if (result) {
+    let simplifiedResult = simplifyFraction(result);
+    let mixedNumberResult = convertToMixedNumber(simplifiedResult);
+    return mixedNumberResult;
+  } else throw new Error("Invalid argument.");
 }
 
 function multiplyFractions(fraction1, fraction2) {
+  //Takes fractions as strings for each argument I.E "1/2" || "10/4"
   const parsedFraction1 = parseFraction(fraction1);
   let numerator1 = parsedFraction1[0];
   let denominator1 = parsedFraction1[1];
@@ -152,6 +109,7 @@ function parseFraction(fraction) {
 }
 
 function getReciprocalFractions(fraction) {
+  //Takes fractions as a string for arugment
   let parsedFraction = parseFraction(fraction);
   if (parsedFraction[0] < 0) {
     let reciprocalNegativeFraction = `-${parsedFraction[1]}/${
@@ -227,9 +185,12 @@ function convertToMixedNumber(simplifiedFraction) {
   if (numerator < denominator && Math.abs(numerator) < denominator) {
     return `${numerator}/${denominator}`;
   }
-  if (numerator > denominator) {
+  if (numerator >= denominator) {
     let integer = Math.floor(numerator / denominator);
     let newNumerator = numerator - integer * denominator;
+    if (newNumerator === 0) {
+      return `${integer}`;
+    }
     return `${integer}_${newNumerator}/${denominator}`;
   }
 }
