@@ -58,5 +58,11 @@ function multiplyFractions(fraction1, fraction2) {
   return `${multiplyNumerator}/${multiplyDenominator}`;
 }
 
+function parseFraction(fraction) {
+  // Returns an array of two integers (only whole numbers - no decimals)
+  let split = fraction.split("/");
+  let parseInteger = split.map((string) => parseInt(string));
+  return parseInteger;
+}
 
-module.exports = { multiplyFractions }
+module.exports = { multiplyFractions, parseFraction };
