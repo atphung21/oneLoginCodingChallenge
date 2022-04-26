@@ -33,10 +33,10 @@
 //  +,
 // -,
 // '/',
-// *
+// * - done
 // Common Denominator
 // Improper Fractions (easiest to calculate) -
-// Parse strings -
+// Parse strings - dont
 // Convert Improper Fractions into Mixed numbers and simplify
 // Convert Mixed numbers into improper fractions -
 
