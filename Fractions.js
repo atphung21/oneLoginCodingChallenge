@@ -19,7 +19,6 @@
 // Cases to think about
 // Improper Fractions (Postive & Negative), Zero, Whole Numbers(positive & Negative), Whole numbers with denominator(Postive & Negative)
 
-
 //Unit test cases
 // Test cases
 // Null arguments
@@ -43,6 +42,17 @@
 // Arguments
 // Improper Fractions
 
+//Edge Cases
+// Simplification (last)
+// Return as improper fraction
+// Return as whole number
+// Error handling
+// return 0 when numerator is 0
+// Throw error for invalid inputs
+// clean up function 9/1 = 9;
+// function to parse operands (split by space)
+// negative numbers when subtracting
+
 function multiplyFractions(fraction1, fraction2) {
   const parsedFraction1 = parseFraction(fraction1);
   let numerator1 = parsedFraction1[0];
@@ -57,7 +67,6 @@ function multiplyFractions(fraction1, fraction2) {
 
   return `${multiplyNumerator}/${multiplyDenominator}`;
 }
-
 
 function divideFractions(fraction1, fraction2) {
   let reciprocalFraction = getReciprocalFractions(fraction2);
@@ -81,7 +90,7 @@ function addFractions(fraction1, fraction2) {
 }
 
 function subtractFractions(fraction1, fraction2) {
-  if (fraction2.startsWith('-')) {
+  if (fraction2.startsWith("-")) {
     let positiveFraction = fraction2.slice(1);
     return addFractions(fraction1, positiveFraction);
   }
@@ -90,8 +99,8 @@ function subtractFractions(fraction1, fraction2) {
 }
 
 function parseFraction(fraction) {
-  // Returns an array of two integers (only whole numbers - no decimals)
-  let split = fraction.split("/");
+  // Returns an array of integers (only whole numbers - no decimals)
+  let split = fraction.split(/[_/]+/);
   let parseInteger = split.map((string) => parseInt(string));
   return parseInteger;
 }
@@ -99,11 +108,39 @@ function parseFraction(fraction) {
 function getReciprocalFractions(fraction) {
   let parsedFraction = parseFraction(fraction);
   if (parsedFraction[0] < 0) {
-    let reciprocalNegativeFraction = `-${parsedFraction[1]}/${parsedFraction[0] * -1}`;
+    let reciprocalNegativeFraction = `-${parsedFraction[1]}/${
+      parsedFraction[0] * -1
+    }`;
     return reciprocalNegativeFraction;
   }
   let reciprocalFraction = `${parsedFraction[1]}/${parsedFraction[0]}`;
   return reciprocalFraction;
 }
 
-module.exports = { multiplyFractions, parseFraction, divideFractions, getReciprocalFractions, addFractions, subtractFractions };
+function convertToImproperFraction(fraction) {
+  if (fraction.includes("_")) {
+    let mixedFraction = parseFraction(fraction);
+    if (mixedFraction[0] < 0) {
+      return `-${
+        Math.abs(mixedFraction[0]) * mixedFraction[2] + mixedFraction[1]
+      }/${mixedFraction[2]}`;
+    }
+    return `${mixedFraction[0] * mixedFraction[2] + mixedFraction[1]}/${
+      mixedFraction[2]
+    }`;
+  }
+  if (fraction.includes("/")) {
+    return fraction;
+  }
+  return `${fraction}/1`;
+}
+
+module.exports = {
+  multiplyFractions,
+  parseFraction,
+  divideFractions,
+  getReciprocalFractions,
+  addFractions,
+  subtractFractions,
+  convertToImproperFraction,
+};

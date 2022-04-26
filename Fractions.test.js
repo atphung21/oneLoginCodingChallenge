@@ -43,6 +43,14 @@ describe("Parse Fraction.", () => {
   test("Parse negative whole number.", () => {
     expect(fractions.parseFraction("-2")).toStrictEqual([-2]);
   });
+
+  test("Parse mixed fractions.", () => {
+    expect(fractions.parseFraction("2_3/4")).toStrictEqual([2,3,4]);
+  });
+
+  test("Parse negative mixed fractions.", () => {
+    expect(fractions.parseFraction("-2_3/4")).toStrictEqual([-2,3,4]);
+  });
 });
 
 describe("Divide Fractions.", () => {
@@ -118,5 +126,33 @@ describe("subtract Fractions.", () => {
   test("Subtract Postive Fraction with a Negative Fraction.", () => {
     expect(fractions.subtractFractions('1/2','-3/4')).toBe('10/8');
   });
+});
+
+describe("Convert mixed fractions to improper fractions.", () => {
+
+  test("Mixed fraction to Improper fraction", () => {
+    expect(fractions.convertToImproperFraction('3_3/4')).toBe('15/4');
+  });
+
+  test("Negative mixed fraction to Improper fraction", () => {
+    expect(fractions.convertToImproperFraction('-3_3/4')).toBe('-15/4');
+  });
+
+  test("Returns fraction if fraction", () => {
+    expect(fractions.convertToImproperFraction('3/4')).toBe('3/4');
+  });
+
+  test("Whole number to improper fraction", () => {
+    expect(fractions.convertToImproperFraction("3")).toBe("3/1");
+  });
+
+  test('Zero to fraction', () => {
+    expect(fractions.convertToImproperFraction('0')).toBe('0/1');
+  });
+
+  test('Negative fraction to fraction', () => {
+    expect(fractions.convertToImproperFraction('-3/4')).toBe('-3/4');
+  });
+
 });
 
