@@ -135,6 +135,36 @@ function convertToImproperFraction(fraction) {
   return `${fraction}/1`;
 }
 
+function findGcd(numerator, denominator) {
+  if (denominator === 0) {
+    return numerator;
+  }
+  return findGcd(denominator, numerator % denominator);
+}
+
+function simplifyFraction (fraction) {
+  let parsedFraction = parseFraction(fraction);
+  let numerator = parsedFraction[0];
+  let denominator = parsedFraction[1];
+
+  let gcd = findGcd(numerator, denominator);
+
+  numerator = numerator/gcd;
+  denominator = denominator/gcd;
+
+  if (numerator === 0) {
+    return '0';
+  }
+  if (denominator === 1) {
+    return `${numerator}`;
+  }
+  if (denominator < 0) {
+    return `-${numerator}/${denominator * -1}`
+  }
+  return `${numerator}/${denominator}`;
+}
+
+
 module.exports = {
   multiplyFractions,
   parseFraction,
@@ -143,4 +173,7 @@ module.exports = {
   addFractions,
   subtractFractions,
   convertToImproperFraction,
+  findGcd,
+  simplifyFraction,
+
 };
