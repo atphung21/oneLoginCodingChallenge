@@ -1,8 +1,22 @@
+## Coding Challenge:
+
+Write a command-line program in the language of your choice that will take operations on fractions as an input and produce a fractional result.
+Legal operators shall be *, /, +, - (multiply, divide, add, subtract)
+Operands and operators shall be separated by one or more spaces
+Mixed numbers will be represented by whole_numerator/denominator. e.g. "3_1/4"
+Improper fractions and whole numbers are also allowed as operands
+
+Example run:
+
+? 1/2 * 3_3/4 = 1_7/8
+
+?2_3/8 + 9/8 = 3_1/2
+
 ## Assumptions
 
-1. Argument is consists of operand, operator, and operand in this order seperated by one or more spaces.
+1. Argument is a string of 'operand, operator, and operand' in this order seperated by one or more spaces.
 2. Operands could be whole numbers, mixed numbers, or fractions.
-3. Return value is a mixed number and/or simplified.
+3. Return value is a mixed number or simplified fraction.
 
 ## How to setup
 1. git clone https://github.com/atphung21/oneLoginCodingChallenge.git
