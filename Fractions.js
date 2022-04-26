@@ -58,6 +58,12 @@ function multiplyFractions(fraction1, fraction2) {
   return `${multiplyNumerator}/${multiplyDenominator}`;
 }
 
+
+function divideFractions(fraction1, fraction2) {
+  let reciprocalFraction = getReciprocalFractions(fraction2);
+  return multiplyFractions(fraction1, reciprocalFraction);
+}
+
 function parseFraction(fraction) {
   // Returns an array of two integers (only whole numbers - no decimals)
   let split = fraction.split("/");
@@ -65,4 +71,10 @@ function parseFraction(fraction) {
   return parseInteger;
 }
 
-module.exports = { multiplyFractions, parseFraction };
+function getReciprocalFractions(fraction) {
+  let parsedFraction = parseFraction(fraction);
+  let reciprocalFraction = `${parsedFraction[1]}/${parsedFraction[0]}`;
+  return reciprocalFraction;
+}
+
+module.exports = { multiplyFractions, parseFraction, divideFractions, getReciprocalFractions };

@@ -7,7 +7,7 @@ describe("Multiply Fractions.", () => {
   });
 
   test("Multiply Zero Fraction with a Negative Improper Fraction.", () => {
-    expect(fractions.multiplyFractions("0/0", "-5/2")).toBe("0/0");
+    expect(fractions.multiplyFractions("0/1", "-5/2")).toBe("0/2");
   });
 
   test("Multiply Negative Fraction with a Positive Fraction.", () => {
@@ -43,4 +43,31 @@ describe("Parse Fraction.", () => {
   test("Parse negative whole number.", () => {
     expect(fractions.parseFraction("-2")).toStrictEqual([-2]);
   });
+});
+
+describe("Divide Fractions.", () => {
+  test("Divide two postive improper fractions.", () => {
+    expect(fractions.divideFractions("5/2", "5/3")).toBe("15/10");
+  });
+
+  test("Divide Zero Fraction with a Negative Improper Fraction.", () => {
+    expect(fractions.divideFractions("0/1", "-5/2")).toBe("0/-5");
+  });
+
+  test("Divide Negative Fraction with a Positive Fraction.", () => {
+    expect(fractions.divideFractions("-1/2", "3/4")).toBe("-4/6");
+  });
+
+});
+
+describe("Get Reciprocal of Fraction", () => {
+
+  test("Reciprocal positive fraction.", () => {
+    expect(fractions.getReciprocalFractions("3/8")).toBe("8/3");
+  });
+
+  test("Reciprocal negative fraction.", () => {
+    expect(fractions.getReciprocalFractions("-1/2")).toBe("2/-1");
+  });
+
 });
