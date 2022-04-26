@@ -167,7 +167,7 @@ describe("Find the greatest common denominator.", () => {
 });
 
 describe("Simplify fractions.", () => {
-  test("Simplify a simplified fraction", () => {
+  test("Simplify a simplified fraction.", () => {
     expect(fractions.simplifyFraction("15/4")).toBe("15/4");
   });
   test("Simplify improper fraction.", () => {
@@ -184,5 +184,49 @@ describe("Simplify fractions.", () => {
   });
   test("Simplify negative fraction.", () => {
     expect(fractions.simplifyFraction("-4/16")).toBe("-1/4");
+  });
+});
+
+describe("Convert simplified fractions into mixed number.", () => {
+  test("Convert improper fraction to mixed number", () => {
+    expect(fractions.convertToMixedNumber("15/4")).toBe("3_3/4");
+  });
+  test("Whole number returns whole number.", () => {
+    expect(fractions.convertToMixedNumber("3")).toBe("3");
+  });
+  test("Convert negative improper fraction to mixed number.", () => {
+    expect(fractions.convertToMixedNumber("-15/4")).toBe("-3_3/4");
+  });
+  test("Simplified fraction returns fraction.", () => {
+    expect(fractions.convertToMixedNumber("1/4")).toBe("1/4");
+  });
+  test("Simplified negative fraction returns fraction.", () => {
+    expect(fractions.convertToMixedNumber("-1/4")).toBe("-1/4");
+  });
+});
+
+describe("Calculate fractions and simplify", () => {
+  test("Multiply fraction with improper fraction.", () => {
+    expect(fractions.fractionCalculator("1/2 * 3_3/4")).toBe("1_7/8");
+  });
+
+  test("Divide mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator("2_3/8 / 9/8")).toBe("2_1/9");
+  });
+
+  test("Add mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator('2_3/8 + 9/8')).toBe("3_1/2");
+  });
+
+  test("Subtract mixed number with improper fraction.", () => {
+    expect(fractions.fractionCalculator('2_3/8 - 9/8')).toBe("1_1/4");
+  });
+
+  test("Throw error if missing operands.", () => {
+    expect(() => fractions.fractionCalculator(' - 9/8')).toThrow("Arugments must include two operands and an operator.");
+  });
+
+  test("Throw error if no arguments.", () => {
+    expect(() => fractions.fractionCalculator()).toThrow("Arugments must include two operands and an operator.");
   });
 });

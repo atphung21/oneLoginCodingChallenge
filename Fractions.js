@@ -53,6 +53,52 @@
 // function to parse operands (split by space)
 // negative numbers when subtracting
 
+function fractionCalculator(equation) {
+  let split = (typeof equation !== "undefined") ? equation
+    .split(" ")
+    .filter((string) => string !== "")
+    .map((element) => {
+      if (
+        element === "*" ||
+        element === "/" ||
+        element === "+" ||
+        element === "-"
+      ) {
+        return element;
+      }
+      return convertToImproperFraction(element);
+    }) : new Error('Must include arguments of two operands and an operator. I.E. 1/2 * 3_3/4');
+
+    console.log(split, 'split')
+
+  if (split.length !== 3) {
+    throw new Error("Arugments must include two operands and an operator.");
+  }
+
+  let fraction1 = split[0];
+  let fraction2 = split[2];
+  let operator = split[1];
+  let result;
+
+  if (operator === "*") {
+    result = multiplyFractions(fraction1, fraction2);
+  }
+  if (operator === "/") {
+    result =  divideFractions(fraction1, fraction2);
+  }
+  if (operator === "+") {
+    result = addFractions(fraction1, fraction2);
+  }
+  if (operator === "-") {
+    result = subtractFractions(fraction1, fraction2);
+  }
+
+  let simplifiedResult = simplifyFraction(result);
+  let mixedNumberResult = convertToMixedNumber(simplifiedResult);
+
+  return mixedNumberResult;
+}
+
 function multiplyFractions(fraction1, fraction2) {
   const parsedFraction1 = parseFraction(fraction1);
   let numerator1 = parsedFraction1[0];
@@ -142,28 +188,51 @@ function findGcd(numerator, denominator) {
   return findGcd(denominator, numerator % denominator);
 }
 
-function simplifyFraction (fraction) {
+function simplifyFraction(fraction) {
   let parsedFraction = parseFraction(fraction);
   let numerator = parsedFraction[0];
   let denominator = parsedFraction[1];
 
   let gcd = findGcd(numerator, denominator);
 
-  numerator = numerator/gcd;
-  denominator = denominator/gcd;
+  numerator = numerator / gcd;
+  denominator = denominator / gcd;
 
   if (numerator === 0) {
-    return '0';
+    return "0";
   }
   if (denominator === 1) {
     return `${numerator}`;
   }
   if (denominator < 0) {
-    return `-${numerator}/${denominator * -1}`
+    return `-${numerator}/${denominator * -1}`;
   }
   return `${numerator}/${denominator}`;
 }
 
+function convertToMixedNumber(simplifiedFraction) {
+  let parsedFraction = parseFraction(simplifiedFraction);
+  let numerator = parsedFraction[0];
+  let denominator = parsedFraction[1];
+
+  if (!denominator) {
+    return `${numerator}`;
+  }
+  if (numerator < 0 && Math.abs(numerator) > denominator) {
+    let absoluteNumerator = Math.abs(numerator);
+    let integer = Math.floor(absoluteNumerator / denominator);
+    let newNumerator = absoluteNumerator - integer * denominator;
+    return `-${integer}_${newNumerator}/${denominator}`;
+  }
+  if (numerator < denominator && Math.abs(numerator) < denominator) {
+    return `${numerator}/${denominator}`;
+  }
+  if (numerator > denominator) {
+    let integer = Math.floor(numerator / denominator);
+    let newNumerator = numerator - integer * denominator;
+    return `${integer}_${newNumerator}/${denominator}`;
+  }
+}
 
 module.exports = {
   multiplyFractions,
@@ -175,5 +244,6 @@ module.exports = {
   convertToImproperFraction,
   findGcd,
   simplifyFraction,
-
+  convertToMixedNumber,
+  fractionCalculator,
 };
